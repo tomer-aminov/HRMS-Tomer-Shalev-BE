@@ -11,21 +11,11 @@ const jobSchema = new mongoose.Schema({
       required: true,
       trim: true
    },
-   pdfFiles: [
+   users: [
       {
-         fileName: {
-            type: String,
-            required: true
-         },
-         filePath: {
-            type: String,
-            required: true
-         },
-         uploadedBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-         }
+         type: mongoose.Schema.Types.ObjectId,
+         ref: 'User',
+         required: true
       }
    ]
 })

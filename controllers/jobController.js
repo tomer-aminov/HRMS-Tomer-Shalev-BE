@@ -4,8 +4,8 @@ const Job = require('../models/Job')
 exports.getAllJobs = async (req, res) => {
    try {
       const jobs = await Job.find().populate(
-         'pdfFiles.uploadedBy',
-         'firstName lastName'
+         'users',
+         'firstName lastName email role phoneNumber'
       )
       res.status(200).json({
          success: true,
@@ -23,9 +23,11 @@ exports.getAllJobs = async (req, res) => {
 // Get single job by ID
 exports.getJobById = async (req, res) => {
    try {
-      const job = await Job.findById(req.params.id).populate(
-         'pdfFiles.uploadedBy',
-         'firstName lastName'
+      const job = await Job.findById(req.params.id).populate('users')
+
+      console.log(
+         'Job data with populated users:',
+         JSON.stringify(job, null, 2)
       )
 
       if (!job) {
@@ -118,11 +120,11 @@ exports.deleteJob = async (req, res) => {
    }
 }
 
-// Add PDF file to job
-exports.addPdfFile = async (req, res) => {
+// Add user to job
+exports.addUserToJob = async (req, res) => {
    try {
       const { jobId } = req.params
-      const { fileName, filePath, uploadedBy } = req.body
+      const { userId } = req.body
 
       const job = await Job.findById(jobId)
 
@@ -133,31 +135,40 @@ exports.addPdfFile = async (req, res) => {
          })
       }
 
-      job.pdfFiles.push({
-         fileName,
-         filePath,
-         uploadedBy
-      })
+      // בדיקה אם המשתמש כבר קיים במשרה
+      if (job.users.includes(userId)) {
+         return res.status(400).json({
+            success: false,
+            message: 'User is already assigned to this job'
+         })
+      }
 
+      job.users.push(userId)
       await job.save()
+
+      // החזרת המשרה עם פרטי המשתמשים
+      const populatedJob = await Job.findById(jobId).populate(
+         'users',
+         'firstName lastName email role phoneNumber'
+      )
 
       res.status(200).json({
          success: true,
-         data: job
+         data: populatedJob
       })
    } catch (error) {
       res.status(400).json({
          success: false,
-         message: 'Error adding PDF file',
+         message: 'Error adding user to job',
          error: error.message
       })
    }
 }
 
-// Remove PDF file from job
-exports.removePdfFile = async (req, res) => {
+// Remove user from job
+exports.removeUserFromJob = async (req, res) => {
    try {
-      const { jobId, fileId } = req.params
+      const { jobId, userId } = req.params
 
       const job = await Job.findById(jobId)
 
@@ -168,19 +179,23 @@ exports.removePdfFile = async (req, res) => {
          })
       }
 
-      job.pdfFiles = job.pdfFiles.filter(
-         (file) => file._id.toString() !== fileId
-      )
+      job.users = job.users.filter((user) => user.toString() !== userId)
       await job.save()
+
+      // החזרת המשרה עם פרטי המשתמשים
+      const populatedJob = await Job.findById(jobId).populate(
+         'users',
+         'firstName lastName email role phoneNumber'
+      )
 
       res.status(200).json({
          success: true,
-         data: job
+         data: populatedJob
       })
    } catch (error) {
       res.status(400).json({
          success: false,
-         message: 'Error removing PDF file',
+         message: 'Error removing user from job',
          error: error.message
       })
    }
@@ -192,7 +207,7 @@ exports.getJobsByTitle = async (req, res) => {
       const { title } = req.params
       const jobs = await Job.find({
          title: { $regex: title, $options: 'i' }
-      }).populate('pdfFiles.uploadedBy', 'firstName lastName')
+      }).populate('users', 'firstName lastName email role phoneNumber')
 
       res.status(200).json({
          success: true,

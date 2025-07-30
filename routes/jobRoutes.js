@@ -6,8 +6,8 @@ const {
    createJob,
    updateJob,
    deleteJob,
-   addPdfFile,
-   removePdfFile,
+   addUserToJob,
+   removeUserFromJob,
    getJobsByTitle
 } = require('../controllers/jobController')
 
@@ -17,7 +17,7 @@ router.get('/', getAllJobs)
 // Get jobs by title (search)
 router.get('/search/:title', getJobsByTitle)
 
-// Get single job
+// Get single job by ID
 router.get('/:id', getJobById)
 
 // Create new job
@@ -29,10 +29,10 @@ router.put('/:id', updateJob)
 // Delete job
 router.delete('/:id', deleteJob)
 
-// Add PDF file to job
-router.post('/:jobId/pdf', addPdfFile)
+// Add user to job
+router.post('/:jobId/users', addUserToJob)
 
-// Remove PDF file from job
-router.delete('/:jobId/pdf/:fileId', removePdfFile)
+// Remove user from job
+router.delete('/:jobId/users/:userId', removeUserFromJob)
 
 module.exports = router
