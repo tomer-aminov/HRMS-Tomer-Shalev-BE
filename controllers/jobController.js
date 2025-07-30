@@ -25,11 +25,6 @@ exports.getJobById = async (req, res) => {
    try {
       const job = await Job.findById(req.params.id).populate('users')
 
-      console.log(
-         'Job data with populated users:',
-         JSON.stringify(job, null, 2)
-      )
-
       if (!job) {
          return res.status(404).json({
             success: false,
