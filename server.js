@@ -26,7 +26,8 @@ if (!fs.existsSync(uploadsDir)) {
 // Middleware
 app.use(
    cors({
-      origin: 'https://hrms-tomer-shalev-fe.netlify.app',
+      //origin: 'https://hrms-tomer-shalev-fe.netlify.app',
+      origin: true,
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
