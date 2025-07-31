@@ -24,9 +24,10 @@
 
 ## 📁 קישורים חשובים
 
--  🌐 [שרת פעיל ב־Render (לדוגמה)](https://hrms-tomer-shalev-be.onrender.com)
--  🧪 Postman Collection (JSON)
+-  🌐 [שרת פעיל ב־Render](https://hrms-tomer-shalev-be.onrender.com)
 -  🔗 [Frontend Repository](https://github.com/tomer-aminov/HRMS-Tomer-Shalev-FE)
+-  🔗 [Frontend Live](https://hrms-tomer-shalev-fe.netlify.app)
+-  🧪 Postman Collection (JSON)
 
 ---
 
