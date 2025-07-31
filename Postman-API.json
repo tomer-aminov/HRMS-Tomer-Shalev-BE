@@ -1,0 +1,110 @@
+{
+   "info": {
+      "name": "HRMS - Tomer & Shalev API",
+      "_postman_id": "12345678-1234-1234-1234-123456789abc",
+      "description": "RESTful API for Human Resource Management System. Includes user registration, login, and job CRUD.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+   },
+   "item": [
+      {
+         "name": "User - Login",
+         "request": {
+            "method": "POST",
+            "header": [
+               {
+                  "key": "Content-Type",
+                  "value": "application/json"
+               }
+            ],
+            "body": {
+               "mode": "raw",
+               "raw": "{\n  \"email\": \"yossi@example.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+               "raw": "https://hrms-tomer-shalev-be.onrender.com/api/users/login",
+               "protocol": "https",
+               "host": ["hrms-tomer-shalev-be", "onrender", "com"],
+               "path": ["api", "users", "login"]
+            },
+            "description": "Login a user"
+         },
+         "response": []
+      },
+      {
+         "name": "Job - Create",
+         "request": {
+            "method": "POST",
+            "header": [
+               {
+                  "key": "Content-Type",
+                  "value": "application/json"
+               }
+            ],
+            "body": {
+               "mode": "raw",
+               "raw": "{\n  \"title\": \"Frontend Developer\",\n  \"description\": \"Work with React.js\",\n  \"location\": \"Tel Aviv\"\n}"
+            },
+            "url": {
+               "raw": "https://hrms-tomer-shalev-be.onrender.com/api/jobs",
+               "protocol": "https",
+               "host": ["hrms-tomer-shalev-be", "onrender", "com"],
+               "path": ["api", "jobs"]
+            },
+            "description": "Create a new job post"
+         },
+         "response": []
+      },
+      {
+         "name": "Job - List all",
+         "request": {
+            "method": "GET",
+            "url": {
+               "raw": "https://hrms-tomer-shalev-be.onrender.com/api/jobs",
+               "protocol": "https",
+               "host": ["hrms-tomer-shalev-be", "onrender", "com"],
+               "path": ["api", "jobs"]
+            },
+            "description": "Get all jobs"
+         },
+         "response": []
+      },
+      {
+         "name": "Job - Update by ID",
+         "request": {
+            "method": "PUT",
+            "header": [
+               {
+                  "key": "Content-Type",
+                  "value": "application/json"
+               }
+            ],
+            "body": {
+               "mode": "raw",
+               "raw": "{\n  \"title\": \"Updated Title\"\n}"
+            },
+            "url": {
+               "raw": "https://hrms-tomer-shalev-be.onrender.com/api/jobs/:id",
+               "protocol": "https",
+               "host": ["hrms-tomer-shalev-be", "onrender", "com"],
+               "path": ["api", "jobs", ":id"]
+            },
+            "description": "Update job by ID"
+         },
+         "response": []
+      },
+      {
+         "name": "Job - Delete by ID",
+         "request": {
+            "method": "DELETE",
+            "url": {
+               "raw": "https://hrms-tomer-shalev-be.onrender.com/api/jobs/:id",
+               "protocol": "https",
+               "host": ["hrms-tomer-shalev-be", "onrender", "com"],
+               "path": ["api", "jobs", ":id"]
+            },
+            "description": "Delete job by ID"
+         },
+         "response": []
+      }
+   ]
+}
